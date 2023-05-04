@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lottery</title>
+</head>
+
+<body background="mesa.jpg">
+
+    <center>
+    <h1>WELCOME TO THE ENGLISH LOTTERY</h1>
+    <img />
+    <audio id="audio"></audio> 
+    <div>
+        
+        <button class="backb" disabled>Back</button>
+        
+        <button class="nextb">Next</button>
+
+
+        <button class="revolver" onclick="reiniciar()">Randomize</button>
+    </div>
+    <script>
+        const baraja = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+            21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
+            43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54];
+        
+        let curr = 0;
+        let audio = document.getElementById('audio');
+        const nextb = document.querySelector('.nextb');
+        const backb = document.querySelector('.backb');
+
+        function desordena() {
+            for (let i = baraja.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                let k = baraja[i];
+                baraja[i] = baraja[j];
+                baraja[j] = k;
+            }
+        }
+
+        function reiniciar() {
+            curr = 0;
+            desordena();
+            document.querySelector('img').src = `${baraja[curr]}.jpg`;
+            audio.src = `${baraja[curr]}.m4a`;
+            backb.disabled = true;
+            nextb.disabled = false;
+            audio.play();
+        }
+
+        desordena();
+        document.querySelector('img').src = `${baraja[curr]}.jpg`;
+        audio.src = `${baraja[curr]}.m4a`;
+        backb.disabled = true;
+
+        nextb.addEventListener('click', () => {
+            curr++;
+            document.querySelector('img').src = `${baraja[curr]}.jpg`;
+            if (curr === 1) {
+                backb.disabled = false;
+            }
+            audio.src = `${baraja[curr]}.m4a`;
+            if (curr === 53) {
+                nextb.disabled = true;
+            }
+            audio.play();
+        });
+
+        backb.addEventListener('click', () => {
+            curr--;
+            document.querySelector('img').src = `${baraja[curr]}.jpg`;
+            if (curr === 0) {
+                backb.disabled = true;
+            }
+            audio.src = `${baraja[curr]}.m4a`;
+            audio.play();
+        });
+
+        </script>
+
+        </center>
+</body>
+
+</html>
